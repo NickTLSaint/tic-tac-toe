@@ -1,0 +1,184 @@
+@charset "UTF-8";
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+}
+
+body, html{
+    background-image: linear-gradient(45deg, rgb(68, 16, 135), rgb(63, 10, 85));
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 2em;
+}
+
+
+main{
+    width: 80vw;
+    height: 80vh;
+    margin: 20px;
+    position: relative;
+    padding: 10px;
+    background-color: #f8f8ff;
+    border-radius: 20px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    overflow: hidden;
+}
+
+section{
+    grid-row: span 1;
+    grid-column: span 3;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+div{
+   grid-row: span 1;
+   grid-column: span 1;
+   margin: 5px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 20px;
+   background-color: rgb(192, 192, 192);
+}
+
+
+p{
+    color: rgb(216, 216, 216);
+    text-shadow: rgba(0, 0, 0, 0.475) 2px 2px 2px;
+    display: none;
+}
+
+.efeitoVert::before{
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 10%;
+    background-image: linear-gradient(#ff0000, #ff0000);
+    background-size: cover;
+    animation: animVert 4.2s linear 1;
+    z-index: 2;
+}
+
+.efeitoHori::before{
+    content: "";
+    position: absolute;
+    width: 10%;
+    height: 15px;
+    background-image: linear-gradient(#ff0000, #ff0000);
+    background-size: cover;
+    animation: animHori 4.2s linear 1;
+    z-index: 2;
+}
+
+
+.efeitoDiag::before{
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 10%;
+    background-image: linear-gradient(#ff0000, #ff0000);
+    background-size: cover;
+    z-index: 2;
+    animation: animDiag 4.2s linear 1;
+}
+
+
+.efeitoDiag2::before{
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 10%;
+    background-image: linear-gradient(#ff0000, #ff0000);
+    background-size: cover;
+    z-index: 2;
+    animation: animDiag2 4.2s linear 1;
+}
+
+.vr1::before{
+    top: -100%;
+    left: 16.5%;
+}
+
+.vr2::before{
+    top: -100%;
+    left: 48.5%;
+}
+
+.vr3::before{
+    top: -100%;
+    left: 80.5%;
+}
+
+.hz1::before{
+    top: 16.5%;
+    left: -100%;
+}
+
+.hz2::before{
+    top: 48.5%;
+    left: -100%;
+}
+
+.hz3::before{
+    top: 80.5%;
+    left: -100%;
+}
+
+.dg1::before{
+    top: -20%;
+    left: -16.5%;
+}
+
+.dg2::before{
+    top: -13.5%;
+    left: 106.5%;
+}
+
+
+@keyframes animVert{
+    0%{
+        transform: scaleY(10);
+    }
+    100%{
+        transform: scaleY(250);
+    }
+}
+
+@keyframes animHori{
+    0%{
+        transform: scaleX(10);
+    }
+    100%{
+        transform: scaleX(250);
+    }
+}
+
+@keyframes animDiag1{
+    0%{
+        transform: rotateZ(-45deg) scaleY(1);
+    }
+    100%{
+        transform: rotateZ(-45deg) scaleY(200);
+    }
+}
+
+
+@keyframes animDiag2{
+    0%{
+        transform: rotateZ(45deg) scaleY(1);
+    }
+    100%{
+        transform: rotateZ(45deg) scaleY(200);
+    }
+}
+
