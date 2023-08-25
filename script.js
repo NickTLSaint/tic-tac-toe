@@ -17,12 +17,13 @@ function ajustarTamanho() {
 
 var table = ["-", "-", "-", "-", "-", "-", "-", "-", "-"];
 var cont = 0;
+var clickable = [true, true, true, true, true, true, true, true, true];
+var waitclick = true;
 
 for (var i = 1; i < 10; i++) {
     var divID = "a" + i;
     var pID = "p" + i;
     var div = document.getElementById(divID);
-    var p = document.getElementById(pID);
     
     div.addEventListener("mouseenter", createHoverIn(pID, divID, i-1));
     div.addEventListener("mouseout", createHoverOut(pID, divID, i-1));
@@ -67,13 +68,18 @@ function hoverOut(pID, divID, pos) {
 }
 
 function onClicked(pID, divID, pos) {
-    table[pos] = "x";
-    var pn = document.getElementById(pID);
-    pn.style.color = "rgba(0, 90, 170, 0.8)";
-    var dn = document.getElementById(divID);
-    dn.style.boxShadow = "none";
-    cont++;
-    enemyMove();
+    if (waitclick && clickable[pos]){
+        waitclick = false;
+        table[pos] = "x";
+        clickable[pos] = false;
+        var pn = document.getElementById(pID);
+        pn.style.color = "rgba(0, 90, 170, 0.8)";
+        var dn = document.getElementById(divID);
+        dn.style.boxShadow = "none";
+        cont++;
+        confVencedor();
+        enemyMove();
+    }
 }
 
 function enemyMove(){
@@ -122,6 +128,10 @@ function basicEnemyMove(){
         px.innerText = "O";
         px.style.display = "block";
         cont++;
+        clickable[n] = false;
+            setTimeout(function() {
+                waitclick = true;
+            }, 1000);
 }
 
 
@@ -265,6 +275,10 @@ function minimax(){
             pn.innerText = "O";
             pn.style.display = "block";
             table[melhor-1] = "o";
+            clickable[melhor-1] = false;
+            setTimeout(function() {
+                waitclick = true;
+            }, 1000);
 
             break;
         }
@@ -373,9 +387,19 @@ function efeito(sty1, sty2){
 
 function confVencedor(){
 
-    var ma = document.getElementById("main");
-
     if(resultado(table) == "o"){
+
+        clickable = [false, false, false, false, false, false, false, false, false];
+        waitclick  = false;
+        var txt = document.getElementById("texto");
+        txt.innerHTML = "<h1>Você perdeu</h1><h2>Clique aqui para reiniciar</h2>";
+        txt.style.color = "red";
+        txt.style.display = "block";
+        var foot = document.getElementById("foot");
+        foot.style.display = "block";
+        ajustarTamanho();
+        foot.style.fontSize = "auto";
+        
 
         if(table[0] == table[1] && table[0] == table[2] && table[0] == "o"){
             efeito("hz1", "efeitoHori");
@@ -402,5 +426,45 @@ function confVencedor(){
             efeito("dg2", "efeitoDiag2");
         }
     }
+    else if(resultado(table) == "-" && table.indexOf("-") == -1){
+        clickable = [false, false, false, false, false, false, false, false, false];
+        waitclick  = false;
+        var txt = document.getElementById("texto");
+        txt.innerHTML = "<h1>Ninguém ganhou</h1><h2>Clique aqui para reiniciar</h2>";
+        txt.style.color = "red";
+        txt.style.display = "block";
+        var foot = document.getElementById("foot");
+        foot.style.display = "block";
+        ajustarTamanho();
+        foot.style.fontSize = "auto";
+    }
     
+} 
+
+let txt = document.getElementById("texto");
+txt.addEventListener("click", createResetar());
+
+function createResetar() {
+    return function() {
+        resetar();
+    };
+}
+
+function resetar(){
+    let txt = document.getElementById("texto");
+    txt.style.display = "none";
+    let foot = document.getElementById("foot");
+    foot.style.display = "none";
+
+    table = ["-", "-", "-", "-", "-", "-", "-", "-", "-"];
+    cont = 0;
+    clickable = [true, true, true, true, true, true, true, true, true];
+    waitclick = true;
+    for (var i = 1; i < 10; i++) {
+        let pID = "p" + i;
+        let p = document.getElementById(pID);
+        p.innerText = "X";
+        p.style.display = "none";
+        p.style.color = "rgb(216, 216, 216)";
+    }
 }
